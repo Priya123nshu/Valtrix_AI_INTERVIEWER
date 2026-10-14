@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+    <title>Valtrix Interview | AI Voice & Technical Assessment Platform</title>
+    <meta name="description" content="Autonomous real-time AI technical voice interviews and candidate repository intelligence by Valtrix." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem("valtrix-theme") || "dark";
+          var isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (isDark) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" src="./frontend.tsx" async></script>
+  </head>
+  <body class="bg-background text-foreground antialiased selection:bg-amber-500/20 selection:text-amber-300">
+    <div id="root"></div>
+  </body>
+</html>

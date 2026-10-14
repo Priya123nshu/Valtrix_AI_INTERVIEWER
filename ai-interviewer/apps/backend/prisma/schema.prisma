@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SeniorityLevel {
+  Fresher
+  Mid
+  Senior
+}
+
+enum QuestionCategory {
+  CompanyMotivation
+  Ownership
+  ConflictResolution
+  Ambiguity
+  DeliveryUnderPressure
+  TechnicalLeadership
+  QualityBar
+  FailureAndLearning
+}
+
+model Interview {
+  id                String          @id @default(uuid())
+  githubMetadata    Json?
+  resumeMetadata    Json?
+  companyMetadata   Json?
+  targetCompany     String          @default("Tech Company")
+  seniorityLevel    SeniorityLevel  @default(Mid)
+  durationMinutes   Int             @default(30)
+  status            InterviewStatus
+  score             Int             @default(0)
+  conversations     Message[]
+  feedback          String?
+  createdAt         DateTime        @default(now())
+}
+
+model Message {
+  id              String       @id @default(uuid())
+  message         String
+  type            MessageType
+  interviewId     String
+  interview       Interview    @relation(fields: [interviewId], references: [id])
+  createdAt       DateTime     @default(now())
+}
+
+model BehavioralQuestion {
+  id            String           @id @default(uuid())
+  category      QuestionCategory
+  level         SeniorityLevel
+  question      String
+  evalCriteria  String?
+}
+
+model ScrapedInterviewReport {
+  id                String    @id @default(uuid())
+  company           String
+  level             String
+  role              String
+  roundType         String
+  roundNumber       Int       @default(1)
+  durationMin       Int       @default(45)
+  questionSummary   String
+  topics            String[]
+  difficulty        String
+  followups         String[]
+  evaluationSignals String[]
+  sourceUrl         String?
+  date              String
+  confidence        Float     @default(0.8)
+  createdAt         DateTime  @default(now())
+}
+
+enum MessageType {
+  User
+  Assistant
+}
+
+enum InterviewStatus {
+  Pre
+  InProgress
+  Done
+}
